@@ -7,7 +7,7 @@
         "build.zig",
         "build.zig.zon",
         "src",
-        "proof_manifest.json",
+        "src/proof_manifest.json",
         "README.md",
     },
     .dependencies = .{},

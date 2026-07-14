@@ -1,0 +1,38 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mlugg/setup-zig@v1
+        with:
+          version: 0.16.0
+      - name: Build library (debug)
+        run: zig build
+      - name: Test (debug)
+        run: zig build test
+      - name: Build optimized library (compiler as optimizer)
+        run: zig build build-release
+
+  # The compiler is the spec director: a refuted theorem must NOT compile.
+  # `zig build gate-refuted` is expected to FAIL. We assert the failure.
+  refute-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mlugg/setup-zig@v1
+        with:
+          version: 0.16.0
+      - name: Assert refuted claims are rejected at compile time
+        run: |
+          if zig build gate-refuted 2>/dev/null; then
+            echo "ERROR: refuted claim compiled — the proof gate is broken"
+            exit 1
+          fi
+          echo "OK: refuted claim correctly rejected by the compiler"
