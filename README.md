@@ -1,5 +1,7 @@
 # proof-gate-zig
 
+**[Status](STATUS.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md) · [Issues](https://github.com/SMC17/proof-gate-zig/issues) · [Public roadmap](https://github.com/users/SMC17/projects/16)**
+
 Zig 0.16 library that enforces formally verified mathematical claims at compile time.
 
 Every function tagged with a `Gate(claim)` type will fail to compile if that claim has been formally refuted — or has never been proven — by a Lean 4 proof assistant.
